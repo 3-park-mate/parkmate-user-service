@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 public class UserRegisterRequestVo {
 
     private String userUuid;
-    private String email;
     private String name;
     private String phoneNumber;
-    private int point;
 
 }

@@ -1,18 +1,19 @@
 package com.parkmate.userservice.common.exception;
 
-import lombok.Builder;
+import com.parkmate.userservice.common.response.ResponseStatus;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class BaseException extends RuntimeException {
 
-    private ErrorCode errorCode;
+    private final ResponseStatus status;
 
-    @Builder
-    public BaseException(ErrorCode errorCode) {
-        this.errorCode = errorCode;
+    public BaseException(ResponseStatus status) {
+        this.status = status;
     }
 
+    public BaseException(ResponseStatus status, String message) {
+        super(message);
+        this.status = status;
+    }
 }

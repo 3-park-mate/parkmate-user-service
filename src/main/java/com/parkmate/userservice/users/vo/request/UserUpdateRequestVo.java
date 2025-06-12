@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 public class UserUpdateRequestVo {
 
     private String name;
-    private String email;
     private String phoneNumber;
 
 }

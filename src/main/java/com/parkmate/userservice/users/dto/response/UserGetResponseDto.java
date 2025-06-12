@@ -11,17 +11,14 @@ import lombok.NoArgsConstructor;
 public class UserGetResponseDto {
 
     private String name;
-    private String email;
     private String phoneNumber;
     private int point;
 
     @Builder
-    public UserGetResponseDto(String name,
-                              String email,
+    private UserGetResponseDto(String name,
                               String phoneNumber,
                               int point) {
         this.name = name;
-        this.email = email;
         this.phoneNumber = phoneNumber;
         this.point = point;
     }
@@ -29,7 +26,6 @@ public class UserGetResponseDto {
     public static UserGetResponseDto from(User user) {
         return UserGetResponseDto.builder()
                 .name(user.getName())
-                .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
                 .point(user.getPoint())
                 .build();
@@ -38,7 +34,6 @@ public class UserGetResponseDto {
     public UserGetResponseVo toVo() {
         return UserGetResponseVo.builder()
                 .name(name)
-                .email(email)
                 .phoneNumber(phoneNumber)
                 .point(point)
                 .build();

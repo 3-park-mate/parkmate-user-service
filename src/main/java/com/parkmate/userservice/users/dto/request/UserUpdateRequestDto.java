@@ -9,23 +9,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserUpdateRequestDto {
 
+    private String userUuid;
     private String name;
-    private String email;
     private String phoneNumber;
 
     @Builder
-    public UserUpdateRequestDto(String name,
-                                String email,
-                                String phoneNumber) {
+    private UserUpdateRequestDto(String userUuid,
+                                 String name,
+                                 String phoneNumber) {
+        this.userUuid = userUuid;
         this.name = name;
-        this.email = email;
         this.phoneNumber = phoneNumber;
     }
 
-    public static UserUpdateRequestDto from(UserUpdateRequestVo userUpdateRequestVo) {
+    public static UserUpdateRequestDto from(String userUuid, UserUpdateRequestVo userUpdateRequestVo) {
         return UserUpdateRequestDto.builder()
+                .userUuid(userUuid)
                 .name(userUpdateRequestVo.getName())
-                .email(userUpdateRequestVo.getEmail())
                 .phoneNumber(userUpdateRequestVo.getPhoneNumber())
                 .build();
     }

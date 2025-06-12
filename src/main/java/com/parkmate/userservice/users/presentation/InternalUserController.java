@@ -1,12 +1,12 @@
 package com.parkmate.userservice.users.presentation;
 
-import com.parkmate.userservice.common.response.BaseResponseEntity;
-import com.parkmate.userservice.common.response.ResponseMessage;
+import com.parkmate.userservice.common.response.ApiResponse;
 import com.parkmate.userservice.users.application.UserService;
 import com.parkmate.userservice.users.dto.request.UserRegisterRequestDto;
 import com.parkmate.userservice.users.vo.request.UserRegisterRequestVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +24,14 @@ public class InternalUserController {
             description = "Auth-service에서 openFeign으로 전송받은 UserRegisterRequestVo로 유저를 등록하는 API 입니다.",
             tags = "{USER-SERVICE}"
     )
-    @PostMapping("/register")
-    public BaseResponseEntity<Void> register(@RequestBody UserRegisterRequestVo userRegisterRequestVo) {
+    @PostMapping
+    public ApiResponse<String> register(@RequestBody UserRegisterRequestVo userRegisterRequestVo) {
         userService.createUser(UserRegisterRequestDto.from(userRegisterRequestVo));
 
-        return new BaseResponseEntity<>(ResponseMessage.SUCCESS_REGISTER_USER.getMessage());
+        return ApiResponse.of(
+                HttpStatus.OK,
+                "유저를 등록하였습니다"
+        );
     }
 
 }

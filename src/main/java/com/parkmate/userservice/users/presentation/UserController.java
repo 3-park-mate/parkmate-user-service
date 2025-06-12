@@ -1,13 +1,13 @@
 package com.parkmate.userservice.users.presentation;
 
-import com.parkmate.userservice.common.response.BaseResponseEntity;
-import com.parkmate.userservice.common.response.ResponseMessage;
+import com.parkmate.userservice.common.response.ApiResponse;
 import com.parkmate.userservice.users.application.UserService;
 import com.parkmate.userservice.users.dto.request.UserUpdateRequestDto;
 import com.parkmate.userservice.users.vo.request.UserUpdateRequestVo;
 import com.parkmate.userservice.users.vo.response.UserGetResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,12 +23,15 @@ public class UserController {
             tags = {"USER-SERVICE"}
     )
     @PutMapping("/{userUuid}")
-    public BaseResponseEntity<Void> updateUser(@PathVariable String userUuid,
-                                               @RequestBody UserUpdateRequestVo userUpdateRequestVo) {
-        userService.updateUser(userUuid,
-                UserUpdateRequestDto.from(userUpdateRequestVo));
+    public ApiResponse<String> updateUser(@PathVariable String userUuid,
+                                          @RequestBody UserUpdateRequestVo userUpdateRequestVo) {
 
-        return new BaseResponseEntity<>(ResponseMessage.SUCCESS_MODIFY_USER.getMessage());
+        userService.updateUser(UserUpdateRequestDto.from(userUuid, userUpdateRequestVo));
+
+        return ApiResponse.of(
+                HttpStatus.OK,
+                "유저를 수정하였습니다."
+        );
     }
 
     @Operation(
@@ -37,10 +40,11 @@ public class UserController {
             tags = {"USER-SERVICE"}
     )
     @GetMapping("/{userUuid}")
-    public BaseResponseEntity<UserGetResponseVo> getUserByUuid(@PathVariable String userUuid) {
+    public ApiResponse<UserGetResponseVo> getUserByUuid(@PathVariable String userUuid) {
 
-        return new BaseResponseEntity<>(ResponseMessage.SUCCESS_GET_USER.getMessage(),
-                userService.findUserByUuid(userUuid).toVo());
+        return ApiResponse.ok(
+                userService.findUserByUuid(userUuid).toVo()
+        );
     }
 
     @Operation(
@@ -49,10 +53,13 @@ public class UserController {
             tags = {"USER-SERVICE"}
     )
     @DeleteMapping("/{userUuid}")
-    public BaseResponseEntity<Void> deleteUser(@PathVariable String userUuid) {
+    public ApiResponse<String> deleteUser(@PathVariable String userUuid) {
         userService.deleteUser(userUuid);
 
-        return new BaseResponseEntity<>(ResponseMessage.SUCCESS_DELETE_USER.getMessage());
+        return ApiResponse.of(
+                HttpStatus.OK,
+                "유저를 삭제하였습니다."
+        );
     }
 
 }

@@ -12,30 +12,22 @@ public class UserRegisterRequestDto {
 
     private String userUuid;
     private String name;
-    private String email;
     private String phoneNumber;
-    private int point;
 
     @Builder
-    public UserRegisterRequestDto(String userUuid,
-                                  String name,
-                                  String email,
-                                  String phoneNumber,
-                                  int point) {
+    private UserRegisterRequestDto(String userUuid,
+                                   String name,
+                                   String phoneNumber) {
         this.userUuid = userUuid;
         this.name = name;
-        this.email = email;
         this.phoneNumber = phoneNumber;
-        this.point = point;
     }
 
     public static UserRegisterRequestDto from(UserRegisterRequestVo userRegisterRequestVo) {
         return UserRegisterRequestDto.builder()
                 .userUuid(userRegisterRequestVo.getUserUuid())
-                .email(userRegisterRequestVo.getEmail())
                 .name(userRegisterRequestVo.getName())
                 .phoneNumber(userRegisterRequestVo.getPhoneNumber())
-                .point(userRegisterRequestVo.getPoint())
                 .build();
     }
 
@@ -43,9 +35,7 @@ public class UserRegisterRequestDto {
         return User.builder()
                 .userUuid(userUuid)
                 .name(name)
-                .email(email)
                 .phoneNumber(phoneNumber)
-                .point(point)
                 .build();
     }
 

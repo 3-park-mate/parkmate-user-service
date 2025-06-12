@@ -8,7 +8,7 @@ public interface UserService {
 
     void createUser(UserRegisterRequestDto userRegisterRequestDto);
 
-    void updateUser(String userUuid, UserUpdateRequestDto userUpdateRequestDto);
+    void updateUser(UserUpdateRequestDto userUpdateRequestDto);
 
     UserGetResponseDto findUserByUuid(String userUuid);
 
